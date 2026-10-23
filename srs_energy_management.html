@@ -1,0 +1,862 @@
+ <!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>SRS - AI-Based Household Energy Management System using Reinforcement Learning</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            line-height: 1.6;
+            color: #333;
+            background-color: #f5f5f5;
+            padding: 40px 20px;
+        }
+
+        .document-container {
+            max-width: 1200px;
+            margin: 0 auto;
+            background: white;
+            box-shadow: 0 0 20px rgba(0,0,0,0.1);
+            border-radius: 8px;
+            overflow: hidden;
+        }
+
+        /* Header Styles */
+        .header-section {
+            text-align: center;
+            padding: 40px 40px 20px;
+            border-bottom: 2px solid #2c3e50;
+        }
+
+        .institution-logo {
+            width: 80px;
+            height: 80px;
+            background: linear-gradient(135deg, #2c3e50, #3498db);
+            border-radius: 50%;
+            margin: 0 auto 20px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-size: 32px;
+            font-weight: bold;
+        }
+
+        .institution-name {
+            font-size: 14px;
+            color: #666;
+            margin-bottom: 20px;
+        }
+
+        .project-title {
+            font-size: 24px;
+            font-weight: bold;
+            color: #2c3e50;
+            margin: 20px 0;
+            text-transform: uppercase;
+        }
+
+        .degree-info {
+            font-size: 18px;
+            margin: 20px 0;
+        }
+
+        .authors {
+            margin: 30px 0;
+            line-height: 2;
+        }
+
+        .supervision {
+            margin: 30px 0;
+            font-style: italic;
+        }
+
+        .university-info {
+            margin: 30px 0;
+            font-size: 14px;
+        }
+
+        .date {
+            margin: 20px 0;
+            font-weight: bold;
+        }
+
+        /* Table of Contents */
+        .toc {
+            background: #f8f9fa;
+            padding: 30px 40px;
+            margin: 20px 0;
+            border-radius: 8px;
+        }
+
+        .toc h2 {
+            color: #2c3e50;
+            margin-bottom: 20px;
+            border-bottom: 2px solid #3498db;
+            display: inline-block;
+        }
+
+        .toc-list {
+            columns: 2;
+            column-gap: 40px;
+            list-style: none;
+            margin-top: 20px;
+        }
+
+        .toc-list li {
+            margin-bottom: 8px;
+            break-inside: avoid;
+        }
+
+        .toc-list a {
+            text-decoration: none;
+            color: #3498db;
+        }
+
+        .toc-list a:hover {
+            text-decoration: underline;
+        }
+
+        /* Content Styles */
+        .content {
+            padding: 40px;
+        }
+
+        h1 {
+            font-size: 28px;
+            color: #2c3e50;
+            margin: 30px 0 20px;
+            border-left: 4px solid #3498db;
+            padding-left: 20px;
+        }
+
+        h2 {
+            font-size: 24px;
+            color: #34495e;
+            margin: 25px 0 15px;
+            border-bottom: 2px solid #ecf0f1;
+            padding-bottom: 8px;
+        }
+
+        h3 {
+            font-size: 20px;
+            color: #3498db;
+            margin: 20px 0 10px;
+        }
+
+        h4 {
+            font-size: 18px;
+            color: #555;
+            margin: 15px 0 10px;
+        }
+
+        p {
+            margin-bottom: 15px;
+            text-align: justify;
+        }
+
+        /* Table Styles */
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 20px 0;
+            font-size: 14px;
+        }
+
+        th, td {
+            border: 1px solid #ddd;
+            padding: 12px;
+            text-align: left;
+            vertical-align: top;
+        }
+
+        th {
+            background-color: #3498db;
+            color: white;
+            font-weight: bold;
+        }
+
+        tr:nth-child(even) {
+            background-color: #f9f9f9;
+        }
+
+        /* Image Container Styles */
+        .image-container {
+            margin: 30px 0;
+            text-align: center;
+            background: #f8f9fa;
+            padding: 20px;
+            border-radius: 8px;
+            border: 1px dashed #ccc;
+        }
+
+        .image-placeholder {
+            background: linear-gradient(135deg, #e0e0e0, #f0f0f0);
+            padding: 60px 20px;
+            text-align: center;
+            border-radius: 8px;
+            margin-bottom: 10px;
+        }
+
+        .image-placeholder img {
+            max-width: 100%;
+            height: auto;
+            border-radius: 8px;
+        }
+
+        .image-caption {
+            font-size: 12px;
+            color: #666;
+            margin-top: 10px;
+            font-style: italic;
+        }
+
+        .diagram-box {
+            background: #f8f9fa;
+            border: 2px solid #3498db;
+            border-radius: 8px;
+            padding: 30px;
+            margin: 20px 0;
+            text-align: center;
+            min-height: 200px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .diagram-title {
+            font-weight: bold;
+            color: #2c3e50;
+            margin-bottom: 15px;
+        }
+
+        /* Code/Flow Styles */
+        .flow-diagram {
+            font-family: monospace;
+            background: #2c3e50;
+            color: #ecf0f1;
+            padding: 20px;
+            border-radius: 8px;
+            overflow-x: auto;
+            white-space: pre;
+            font-size: 12px;
+        }
+
+        /* List Styles */
+        ul, ol {
+            margin: 15px 0 15px 30px;
+        }
+
+        li {
+            margin-bottom: 8px;
+        }
+
+        /* Page Break for Print */
+        @media print {
+            body {
+                padding: 0;
+                margin: 0;
+            }
+            .document-container {
+                box-shadow: none;
+                border-radius: 0;
+            }
+            .page-break {
+                page-break-before: always;
+            }
+            .no-break {
+                page-break-inside: avoid;
+            }
+        }
+
+        .page-break {
+            page-break-before: always;
+            margin-top: 20px;
+        }
+
+        footer {
+            text-align: center;
+            padding: 20px;
+            background: #f8f9fa;
+            font-size: 12px;
+            color: #666;
+            border-top: 1px solid #ddd;
+        }
+    </style>
+</head>
+<body>
+    <div class="document-container">
+        <!-- Header Section -->
+        <div class="header-section">
+            <div class="institution-logo">
+                <span>IET</span>
+            </div>
+            <div class="institution-name">
+                <strong>INSTITUTE OF ENGINEERING AND TECHNOLOGY</strong><br>
+                DEEN DAYAL UPADHYAYA GORAKHPUR UNIVERSITY, GORAKHPUR
+            </div>
+            <div class="project-title">
+                AI-BASED HOUSEHOLD ENERGY MANAGEMENT SYSTEM<br>
+                USING REINFORCEMENT LEARNING
+            </div>
+            <div class="degree-info">
+                A Project Submitted<br>
+                In Partial Fulfilment of the Requirements<br>
+                For the Degree of<br>
+                <strong>BACHELOR OF TECHNOLOGY</strong><br>
+                In<br>
+                <strong>INFORMATION TECHNOLOGY</strong>
+            </div>
+            <div class="authors">
+                <strong>By</strong><br>
+                [Student Name 1]: [Roll Number]<br>
+                [Student Name 2]: [Roll Number]<br>
+                [Student Name 3]: [Roll Number]<br>
+                [Student Name 4]: [Roll Number]
+            </div>
+            <div class="supervision">
+                <strong>Under the Supervision of</strong><br>
+                [Supervisor Name 1]<br>
+                [Supervisor Name 2]
+            </div>
+            <div class="university-info">
+                To the<br>
+                <strong>FACULTY OF INFORMATION TECHNOLOGY</strong><br>
+                DEEN DAYAL UPADHYAYA GORAKHPUR UNIVERSITY<br>
+                GORAKHPUR
+            </div>
+            <div class="date">
+                <strong>APRIL, 2026</strong>
+            </div>
+        </div>
+
+        <!-- Table of Contents -->
+        <div class="toc">
+            <h2>Table of Contents</h2>
+            <ul class="toc-list">
+                <li>1. Introduction</li>
+                <li>1.1 Purpose</li>
+                <li>1.2 Scope of the Project</li>
+                <li>1.3 Definitions, Acronyms and Abbreviations</li>
+                <li>1.4 References</li>
+                <li>2. Overall Description</li>
+                <li>2.1 Product Perspective</li>
+                <li>2.2 Product Functions</li>
+                <li>2.3 User Classes and Characteristics</li>
+                <li>2.4 Operating Environment</li>
+                <li>2.5 Assumptions and Constraints</li>
+                <li>3. System Architecture</li>
+                <li>3.1 Architecture Overview</li>
+                <li>3.2 Reinforcement Learning Agent Module</li>
+                <li>3.3 Environment Simulation Module</li>
+                <li>3.4 Database Architecture</li>
+                <li>4. Data Flow Diagrams</li>
+                <li>5. System Features</li>
+                <li>6. Functional Requirements</li>
+                <li>7. External Interface Requirements</li>
+                <li>8. Security and Compliance Considerations</li>
+                <li>9. Non-Functional Requirements</li>
+                <li>10. System Diagrams</li>
+                <li>11. Conclusion</li>
+                <li>12. Future Enhancements</li>
+            </ul>
+        </div>
+
+        <!-- Main Content -->
+        <div class="content">
+            <!-- Section 1: INTRODUCTION -->
+            <h1>1. INTRODUCTION</h1>
+            
+            <h2>1.1 Purpose</h2>
+            <p>The main purpose of this project is to develop an intelligent system that optimizes household electricity consumption using Artificial Intelligence, specifically Reinforcement Learning (RL). Traditional energy management systems rely on fixed rules, which are often inefficient in adapting to dynamic environmental factors like changing electricity demand, weather conditions, and varying energy prices. This leads to increased costs and inefficient energy usage. The proposed system aims to automate and optimize this process by learning the best energy management strategies over time.</p>
+            
+            <div class="image-container">
+                <div class="image-placeholder">
+                    <img src="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='600' height='300' viewBox='0 0 600 300'%3E%3Crect width='600' height='300' fill='%233498db'/%3E%3Ctext x='50%25' y='50%25' text-anchor='middle' dy='.3em' fill='white' font-size='18' font-family='Arial'%3ESmart Home Energy Management Concept%3C/text%3E%3C/svg%3E" alt="Smart Home Energy Management Concept">
+                </div>
+                <div class="image-caption">Figure 1.1: Smart Home Energy Management Concept - AI optimizing household energy consumption</div>
+            </div>
+            
+            <p>The system will allow for dynamic decision-making regarding the source of energy (grid, solar, battery) and the scheduling of appliance usage. By interacting with the environment (household demand, temperature, weather), the RL agent will learn an optimal policy to minimize electricity costs while ensuring user comfort and balancing energy consumption.</p>
+            
+            <p>This system is designed to:</p>
+            <ul>
+                <li><strong>Reduce Electricity Costs:</strong> Optimize energy usage to minimize bills.</li>
+                <li><strong>Improve Energy Efficiency:</strong> Make smart decisions to avoid peak-time usage and utilize renewable sources effectively.</li>
+                <li><strong>Ensure User Comfort:</strong> Balance cost optimization with the household's energy needs.</li>
+                <li><strong>Automate Energy Management:</strong> Provide a hands-free solution that adapts to changing conditions.</li>
+            </ul>
+
+            <h2>1.2 Scope of the Project</h2>
+            <p>The scope of this project focuses on developing a software-based intelligent system that simulates a household environment and optimizes its energy usage using Reinforcement Learning.</p>
+            <p>The scope includes:</p>
+            <ul>
+                <li>Develop a Reinforcement Learning model (e.g., Q-Learning) capable of learning optimal energy management policies.</li>
+                <li>Simulate a household environment that includes variables such as energy demand, temperature, weather, and energy sources (grid, solar, battery).</li>
+                <li>Implement a decision-making engine that selects the optimal energy source or appliance schedule based on the current state.</li>
+                <li>Provide a user interface for visualizing system performance, energy consumption, cost savings, and the agent's learning progress.</li>
+                <li>Ensure the system can balance competing objectives: minimizing cost, reducing peak demand, and maximizing renewable energy usage.</li>
+                <li>Provide scalability for integration with more complex smart home setups in the future.</li>
+            </ul>
+
+            <div class="image-container">
+                <div class="image-placeholder">
+                    <img src="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='600' height='300' viewBox='0 0 600 300'%3E%3Crect width='600' height='300' fill='%232c3e50'/%3E%3Ctext x='50%25' y='50%25' text-anchor='middle' dy='.3em' fill='white' font-size='18' font-family='Arial'%3ESystem Scope: Smart Household Energy Ecosystem%3C/text%3E%3C/svg%3E" alt="System Scope">
+                </div>
+                <div class="image-caption">Figure 1.2: System Scope - Components of the Smart Household Energy Ecosystem</div>
+            </div>
+
+            <h2>1.3 Definitions, Acronyms and Abbreviations</h2>
+            <ul>
+                <li><strong>AI</strong> — Artificial Intelligence</li>
+                <li><strong>ML</strong> — Machine Learning</li>
+                <li><strong>RL</strong> — Reinforcement Learning</li>
+                <li><strong>Agent</strong> — The decision-making entity (the RL model)</li>
+                <li><strong>Environment</strong> — The context in which the agent operates (the household and its energy systems)</li>
+                <li><strong>State (S)</strong> — The current situation of the environment (e.g., current demand, temperature)</li>
+                <li><strong>Action (A)</strong> — The choice made by the agent (e.g., use grid power, use solar power)</li>
+                <li><strong>Reward (R)</strong> — The feedback signal given to the agent after an action</li>
+                <li><strong>Q-Learning</strong> — A model-free reinforcement learning algorithm</li>
+                <li><strong>Smart Grid</strong> — An electrical grid that uses digital technology to monitor and manage electricity transport</li>
+            </ul>
+
+            <h2>1.4 References</h2>
+            <ul>
+                <li>[1] J. R. Vázquez-Canteli and Z. Nagy, "Reinforcement Learning for Demand Response: A Review of Algorithms and Modeling Techniques," <em>Applied Energy</em>, vol. 235, pp. 1072–1089, 2019.</li>
+                <li>[2] L. Yu, W. Sun, and W. Liu, "Reinforcement Learning-Based Smart Home Energy Management," <em>IEEE Transactions on Smart Grid</em>, vol. 11, no. 5, pp. 4185–4196, Sept. 2020.</li>
+                <li>[3] E. Mocanu, D. C. Mocanu, P. H. Nguyen, and A. Liotta, "A Deep Reinforcement Learning Framework for Building Energy Management," <em>IEEE Transactions on Sustainable Energy</em>, vol. 9, no. 3, pp. 1256–1266, July 2018.</li>
+                <li>[4] D. O'Neill, M. Levorato, and A. Goldsmith, "Residential Demand Response Using Reinforcement Learning," in <em>2010 First IEEE International Conference on Smart Grid Communications</em>, 2010, pp. 409-414.</li>
+                <li>[5] S. Wang, Y. Wang, and Y. Liu, "Deep Reinforcement Learning for Optimal Energy Management in Smart Home," <em>Journal of Modern Power Systems and Clean Energy</em>, 2021.</li>
+            </ul>
+
+            <!-- Section 2: OVERALL DESCRIPTION -->
+            <h1>2. OVERALL DESCRIPTION</h1>
+            
+            <h2>2.1 Product Perspective</h2>
+            <p>The AI-Based Household Energy Management System is designed as a software-based simulation and optimization tool. It acts as a standalone intelligent system that integrates Reinforcement Learning techniques to automate and optimize household energy decisions.</p>
+            <ul>
+                <li>Provides automated decision-making for energy consumption and sourcing.</li>
+                <li>Simulates a household environment with dynamic parameters like demand, temperature, and weather.</li>
+                <li>Integrates an RL agent that learns optimal policies through trial and error.</li>
+                <li>Aims to minimize electricity costs and improve energy efficiency.</li>
+                <li>Provides a web-based interface for monitoring, configuration, and analysis.</li>
+                <li>Reduces manual intervention required for energy management.</li>
+            </ul>
+
+            <div class="image-container">
+                <div class="image-placeholder">
+                    <img src="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='600' height='300' viewBox='0 0 600 300'%3E%3Crect width='600' height='300' fill='%2327ae60'/%3E%3Ctext x='50%25' y='50%25' text-anchor='middle' dy='.3em' fill='white' font-size='18' font-family='Arial'%3ERL Agent Learning Process%3C/text%3E%3C/svg%3E" alt="RL Agent Learning Process">
+                </div>
+                <div class="image-caption">Figure 2.1: Reinforcement Learning Agent Learning Process in Energy Management</div>
+            </div>
+
+            <h2>2.2 Product Functions</h2>
+            <ol>
+                <li><strong>Data Acquisition and Monitoring:</strong> The system simulates or receives real-time data on household energy demand, temperature, weather conditions, and energy prices.</li>
+                <li><strong>State Representation and Management:</strong> The system consolidates this data into a structured "state" that represents the current situation for the RL agent.</li>
+                <li><strong>RL-Based Decision Engine:</strong> A Reinforcement Learning agent (using Q-Learning) processes the current state to select the optimal action (e.g., which energy source to use, which appliance to turn on/off).</li>
+                <li><strong>Action Execution and Control:</strong> The system executes the chosen action, simulating its impact on energy consumption and cost.</li>
+                <li><strong>Reward Calculation and Policy Update:</strong> The system calculates a reward based on the outcome (e.g., negative for high cost, positive for low cost) and updates the agent's policy (Q-table) accordingly.</li>
+                <li><strong>Performance Visualization and Reporting:</strong> The system provides graphical reports on energy usage, cost savings, agent performance, and learning progress.</li>
+                <li><strong>User Configuration and Preferences:</strong> The system allows users to set preferences such as cost-savings priority or comfort levels, and configure simulation parameters.</li>
+            </ol>
+
+            <h2>2.3 User Classes and Characteristics</h2>
+            <table>
+                <thead>
+                    <tr><th>User Class</th><th>Role / Responsibilities</th></tr>
+                </thead>
+                <tbody>
+                    <tr><td><strong>Homeowner/End-User</strong></td><td>The homeowner is the primary user. They can monitor real-time and historical energy usage, view cost savings, configure their preferences (e.g., priority on cost-saving vs. comfort), and visualize the AI's decision-making process.</td></tr>
+                    <tr><td><strong>System Administrator</strong></td><td>The administrator manages the underlying system. This user is responsible for managing user accounts, maintaining system logs, monitoring system health, and ensuring proper functioning of the platform.</td></tr>
+                </tbody>
+            </table>
+
+            <h2>2.4 Operating Environment</h2>
+            <p>The system operates in a web-based environment accessible through modern web browsers (Google Chrome, Microsoft Edge, Mozilla Firefox) on standard computing systems (Windows, Linux, macOS). The user only requires a stable internet connection to access the application.</p>
+            <p>The server-side environment manages application logic, the RL agent, simulation processing, and database operations. The system can be deployed on a local server or a cloud-based platform. In terms of hardware, a standard desktop or laptop with a modern processor and adequate RAM (minimum 8GB recommended for RL processing) is sufficient.</p>
+
+            <h2>2.5 Assumptions and Constraints</h2>
+            <h3>Assumptions</h3>
+            <ul>
+                <li><strong>Data Availability:</strong> It is assumed that sufficient simulated data for household demand, weather, and pricing is available for training the RL agent.</li>
+                <li><strong>User Knowledge:</strong> It is assumed that users have a basic understanding of energy concepts to interpret the system's outputs.</li>
+                <li><strong>Stable Connectivity:</strong> The system assumes users will have a stable internet connection to access the web application.</li>
+                <li><strong>RL Resources:</strong> The system assumes that necessary RL libraries are available.</li>
+            </ul>
+            <h3>System Constraints</h3>
+            <ul>
+                <li><strong>Simulation Environment:</strong> The system's initial implementation may be limited to a simulated household environment.</li>
+                <li><strong>AI Model Complexity:</strong> The RL model's accuracy depends on the complexity of the environment and hyperparameters chosen.</li>
+                <li><strong>Training Time:</strong> Training the RL agent may require significant computational time.</li>
+                <li><strong>Time Constraint:</strong> The project must be completed within the limited time frame allocated for the academic project.</li>
+            </ul>
+
+            <!-- Section 3: System Architecture -->
+            <h1>3. SYSTEM ARCHITECTURE</h1>
+            
+            <div class="image-container">
+                <div class="image-placeholder">
+                    <img src="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='700' height='400' viewBox='0 0 700 400'%3E%3Crect width='700' height='400' fill='%23ecf0f1'/%3E%3Crect x='20' y='20' width='200' height='80' fill='%233498db' rx='8'/%3E%3Ctext x='120' y='65' text-anchor='middle' fill='white' font-size='12'%3EUser Interface%3C/text%3E%3Crect x='250' y='20' width='200' height='80' fill='%233498db' rx='8'/%3E%3Ctext x='350' y='65' text-anchor='middle' fill='white' font-size='12'%3EApplication Server%3C/text%3E%3Crect x='480' y='20' width='200' height='80' fill='%233498db' rx='8'/%3E%3Ctext x='580' y='65' text-anchor='middle' fill='white' font-size='12'%3EDatabase%3C/text%3E%3Crect x='150' y='150' width='200' height='80' fill='%2327ae60' rx='8'/%3E%3Ctext x='250' y='195' text-anchor='middle' fill='white' font-size='12'%3ERL Agent Module%3C/text%3E%3Crect x='380' y='150' width='200' height='80' fill='%2327ae60' rx='8'/%3E%3Ctext x='480' y='195' text-anchor='middle' fill='white' font-size='12'%3EEnvironment Simulation%3C/text%3E%3C/svg%3E" alt="System Architecture Diagram">
+                </div>
+                <div class="image-caption">Figure 3.1: System Architecture - Component Interaction Diagram</div>
+            </div>
+
+            <h2>3.1 Architecture Overview</h2>
+            <ol>
+                <li><strong>User Interface:</strong> The front-end component for user interaction, built with web technologies (HTML, CSS, JS). It allows users to view dashboards, set preferences, and visualize performance.</li>
+                <li><strong>Application Server:</strong> The central processing unit that handles user requests, manages the RL agent, runs the environment simulation, and communicates with the database.</li>
+                <li><strong>Reinforcement Learning (RL) Agent Module:</strong> The core decision-making component containing the RL algorithm (Q-Learning). It receives the current state, selects an action, and receives a reward to update its policy.</li>
+                <li><strong>Environment Simulation Module:</strong> This module simulates the household energy system. It takes the agent's action as input and updates simulated parameters to produce a new state and reward.</li>
+                <li><strong>Database:</strong> Stores system data, simulation parameters, user preferences, and logs for analysis.</li>
+            </ol>
+
+            <div class="diagram-box">
+                <div class="diagram-title">Figure 3.2: Architecture Workflow</div>
+                <div class="flow-diagram">
+User → User Interface → Application Server
+                              ↓
+                    ┌─────────────────────┐
+                    │   RL Agent Module   │
+                    │  (Q-Learning Agent) │
+                    └─────────────────────┘
+                              ↓
+                    ┌─────────────────────┐
+                    │ Environment Module  │
+                    │  (Household Sim.)   │
+                    └─────────────────────┘
+                              ↓
+                         Database
+                </div>
+            </div>
+
+            <h2>3.2 Reinforcement Learning Agent Module</h2>
+            <p>This module is the brain of the system. It implements a Q-Learning algorithm where the agent learns a Q-table that maps states to actions.</p>
+            <ul>
+                <li><strong>State:</strong> A vector representing current conditions (e.g., [energy_demand, temperature, weather_code, time_of_day, energy_price])</li>
+                <li><strong>Action:</strong> Decision choices such as [use_grid, use_solar, use_battery, turn_off_ac]</li>
+                <li><strong>Reward:</strong> A scalar value calculated based on the action's impact on cost and consumption</li>
+            </ul>
+
+            <div class="image-container">
+                <div class="image-placeholder">
+                    <img src="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='600' height='200' viewBox='0 0 600 200'%3E%3Crect width='600' height='200' fill='%23f39c12'/%3E%3Ctext x='50%25' y='50%25' text-anchor='middle' dy='.3em' fill='white' font-size='14' font-family='Arial'%3EState → Agent → Action → Environment → Reward → Update Q-Table%3C/text%3E%3C/svg%3E" alt="RL Workflow">
+                </div>
+                <div class="image-caption">Figure 3.3: Reinforcement Learning Workflow in Energy Management</div>
+            </div>
+
+            <h2>3.3 Environment Simulation Module</h2>
+            <p>This module creates a realistic simulation of a household. It takes the RL agent's action and updates internal variables.</p>
+            <ul>
+                <li><strong>Inputs:</strong> Simulated data streams for demand, temperature, weather, and pricing</li>
+                <li><strong>Process:</strong> Models the physical and economic impact of actions (e.g., selecting "use_solar" reduces grid consumption and cost)</li>
+                <li><strong>Output:</strong> The new state (S') and immediate reward (R)</li>
+            </ul>
+
+            <h2>3.4 Database Architecture</h2>
+            <p>The system uses a relational database to store simulation and user data. Tables include:</p>
+            <ul>
+                <li><strong>Users:</strong> Stores user credentials and preferences</li>
+                <li><strong>SimulationLogs:</strong> Records of states, actions, rewards, and timestamps</li>
+                <li><strong>ModelParameters:</strong> Stores the learned Q-table or weights of the RL model</li>
+                <li><strong>EnergyData:</strong> Stores historical or simulated data on demand, pricing, and weather</li>
+            </ul>
+
+            <!-- Section 4: Data Flow Diagrams -->
+            <h1>4. DATA FLOW DIAGRAM</h1>
+            
+            <div class="diagram-box">
+                <div class="diagram-title">Diagram 4.1: Level-0 Data Flow Diagram</div>
+                <div class="flow-diagram">
+    ┌─────────────┐         ┌─────────────────────────────────────────┐
+    │    User     │         │      AI-Based Energy Management        │
+    │             │         │               System                    │
+    │ (Homeowner/ │◄───────►│                                         │
+    │   Admin)    │         │  ┌───────────┐      ┌───────────────┐  │
+    └─────────────┘         │  │    RL     │      │  Environment  │  │
+                            │  │   Agent   │◄────►│  Simulation   │  │
+                            │  └───────────┘      └───────────────┘  │
+                            │         │                  │            │
+                            │         ▼                  ▼            │
+                            │  ┌─────────────────────────────────┐   │
+                            │  │           Database              │   │
+                            │  └─────────────────────────────────┘   │
+                            └─────────────────────────────────────────┘
+                </div>
+            </div>
+
+            <div class="diagram-box">
+                <div class="diagram-title">Diagram 4.2: Level-1 Data Flow Diagram</div>
+                <div class="flow-diagram">
+User Config → System Parameters
+                  ↓
+        ┌─────────────────┐
+        │ Data Acquisition│ ← Simulated Data (Demand, Temp, Weather, Price)
+        └─────────────────┘
+                  ↓
+        ┌─────────────────┐
+        │ State Creation  │
+        └─────────────────┘
+                  ↓
+        ┌─────────────────┐
+        │   RL Agent      │ ← Q-Table
+        │ (Action Select) │
+        └─────────────────┘
+                  ↓
+        ┌─────────────────┐
+        │ Action Execution│
+        └─────────────────┘
+                  ↓
+        ┌─────────────────┐
+        │ Reward Calc &   │
+        │ Policy Update   │
+        └─────────────────┘
+                  ↓
+        ┌─────────────────┐
+        │   Database      │
+        └─────────────────┘
+                </div>
+            </div>
+
+            <!-- Section 5: System Features -->
+            <h1>5. SYSTEM FEATURES</h1>
+            
+            <h2>5.1 Data Acquisition and Monitoring</h2>
+            <p><strong>Description:</strong> This feature captures the state of the environment, including simulated or real-time data on energy demand, weather, temperature, and pricing.</p>
+            <p><strong>Input:</strong> Simulated or real-time data streams.</p>
+            <p><strong>Processing:</strong> The system normalizes and structures the incoming data.</p>
+            <p><strong>Output:</strong> A structured state vector for the RL agent.</p>
+            
+            <h2>5.2 State Representation and Management</h2>
+            <p><strong>Description:</strong> This feature manages the current state of the environment, acting as a bridge between the environment and the RL agent.</p>
+            <p><strong>Input:</strong> Raw data from the acquisition module.</p>
+            <p><strong>Processing:</strong> The system compiles the data into a predefined state representation.</p>
+            <p><strong>Output:</strong> A well-defined state object ready for the RL agent.</p>
+            
+            <h2>5.3 RL-Based Decision Engine</h2>
+            <p><strong>Description:</strong> The core feature where the RL agent uses its learned policy to select the best action for a given state.</p>
+            <p><strong>Input:</strong> The current state (S).</p>
+            <p><strong>Processing:</strong> The agent uses an epsilon-greedy strategy to explore or exploit the Q-table.</p>
+            <p><strong>Output:</strong> The selected action (A) to be taken.</p>
+            
+            <div class="image-container">
+                <div class="image-placeholder">
+                    <img src="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='600' height='250' viewBox='0 0 600 250'%3E%3Crect width='600' height='250' fill='%239b59b6'/%3E%3Ctext x='50%25' y='50%25' text-anchor='middle' dy='.3em' fill='white' font-size='14'%3EQLearning Decision Process%3C/text%3E%3C/svg%3E" alt="Q-Learning Decision Process">
+                </div>
+                <div class="image-caption">Figure 5.1: Q-Learning Decision Process for Energy Management</div>
+            </div>
+            
+            <h2>5.4 Action Execution and Control</h2>
+            <p><strong>Description:</strong> This feature simulates the execution of the chosen action within the environment and calculates its effect.</p>
+            <p><strong>Input:</strong> The selected action (A) from the RL agent.</p>
+            <p><strong>Processing:</strong> The system updates the simulated environment's parameters based on the action.</p>
+            <p><strong>Output:</strong> A new state (S') and an intermediate cost/demand figure.</p>
+            
+            <h2>5.5 Reward Calculation and Policy Update</h2>
+            <p><strong>Description:</strong> This feature calculates the reward based on the result of the action and updates the RL agent's policy.</p>
+            <p><strong>Input:</strong> The action's outcome (new cost, consumption) and user preferences.</p>
+            <p><strong>Processing:</strong> A reward function calculates a scalar value. The Q-learning algorithm updates the Q-table using the Bellman equation.</p>
+            <p><strong>Output:</strong> An updated Q-table (policy) for the RL agent.</p>
+            
+            <h2>5.6 Performance Visualization and Reporting</h2>
+            <p><strong>Description:</strong> This feature provides a user-friendly interface to view the system's performance.</p>
+            <p><strong>Input:</strong> Data from the simulation logs and database.</p>
+            <p><strong>Processing:</strong> The system generates graphs and charts to show cost savings, energy mix, and agent learning curve.</p>
+            <p><strong>Output:</strong> Interactive visualizations and downloadable reports.</p>
+            
+            <div class="image-container">
+                <div class="image-placeholder">
+                    <img src="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='600' height='300' viewBox='0 0 600 300'%3E%3Crect width='600' height='300' fill='%231e8440'/%3E%3Ctext x='50%25' y='50%25' text-anchor='middle' dy='.3em' fill='white' font-size='14'%3EPerformance Dashboard - Cost Savings & Energy Mix%3C/text%3E%3C/svg%3E" alt="Performance Dashboard">
+                </div>
+                <div class="image-caption">Figure 5.2: Performance Dashboard - Cost Savings and Energy Mix Visualization</div>
+            </div>
+            
+            <h2>5.7 User Configuration and Preferences</h2>
+            <p><strong>Description:</strong> This feature allows users to set their priorities and customize the system's behavior.</p>
+            <p><strong>Input:</strong> User-defined parameters (e.g., cost_weight, comfort_weight).</p>
+            <p><strong>Processing:</strong> The system adjusts the reward function or simulation parameters accordingly.</p>
+            <p><strong>Output:</strong> A personalized configuration for the energy management system.</p>
+
+            <!-- Section 6: Functional Requirements -->
+            <h1>6. FUNCTIONAL REQUIREMENTS</h1>
+            
+            <table>
+                <thead>
+                    <tr><th>ID</th><th>Requirement</th><th>Description</th><th>Functionality</th></tr>
+                </thead>
+                <tbody>
+                    <tr><td>FR1</td><td>System Configuration</td><td>The system shall allow configuration of simulation parameters.</td><td>Users can set parameters like simulation duration, starting demand, weather patterns, and RL agent's learning rate.</td></tr>
+                    <tr><td>FR2</td><td>Environment Simulation</td><td>The system shall simulate a dynamic household environment.</td><td>The simulation generates and updates data points for energy demand, temperature, weather, and time-of-day pricing.</td></tr>
+                    <tr><td>FR3</td><td>State Representation</td><td>The system shall represent the environment's condition as a "state".</td><td>The system compiles simulated data into a predefined state vector.</td></tr>
+                    <tr><td>FR4</td><td>RL-Based Decision Making</td><td>The system shall implement a Q-Learning agent for energy management.</td><td>The RL agent takes the current state and outputs an action.</td></tr>
+                    <tr><td>FR5</td><td>Action Impact Simulation</td><td>The system shall simulate the impact of the agent's action.</td><td>The environment module updates cumulative cost and grid energy drawn based on the action.</td></tr>
+                    <tr><td>FR6</td><td>Reward Calculation</td><td>The system shall calculate a reward signal based on the action result.</td><td>The reward function produces a numeric value based on cost and comfort.</td></tr>
+                    <tr><td>FR7</td><td>Policy Learning and Update</td><td>The system shall update the RL agent's policy based on the reward.</td><td>The Q-learning algorithm updates the Q-value for the state-action pair.</td></tr>
+                    <tr><td>FR8</td><td>Performance Visualization</td><td>The system shall provide a dashboard for visualizing performance.</td><td>The system generates graphs showing cumulative cost, reward per episode, and energy source breakdown.</td></tr>
+                    <tr><td>FR9</td><td>Data Logging and Storage</td><td>The system shall log all simulation steps for analysis.</td><td>States, actions, rewards, and costs are stored in a database with timestamps.</td></tr>
+                    <tr><td>FR10</td><td>Model Persistence</td><td>The system shall allow the trained RL model to be saved and loaded.</td><td>The system can save the learned policy to a file for future use without retraining.</td></tr>
+                </tbody>
+            </table>
+
+            <!-- Section 7: External Interface Requirements -->
+            <h1>7. EXTERNAL INTERFACE REQUIREMENTS</h1>
+            
+            <h2>7.1 User Interfaces</h2>
+            <ul>
+                <li><strong>Configuration Interface:</strong> An interface for setting up simulation parameters and user preferences.</li>
+                <li><strong>Dashboard Interface:</strong> The main control panel providing an overview of system performance.</li>
+                <li><strong>Visualization Interface:</strong> Dedicated pages for viewing graphs and charts on energy usage and cost savings.</li>
+                <li><strong>Simulation Control Interface:</strong> Buttons to start, pause, stop, and reset the simulation.</li>
+            </ul>
+            
+            <div class="image-container">
+                <div class="image-placeholder">
+                    <img src="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='600' height='250' viewBox='0 0 600 250'%3E%3Crect width='600' height='250' fill='%23e67e22'/%3E%3Ctext x='50%25' y='50%25' text-anchor='middle' dy='.3em' fill='white' font-size='14'%3EUser Interface Mockup - Energy Management Dashboard%3C/text%3E%3C/svg%3E" alt="User Interface Mockup">
+                </div>
+                <div class="image-caption">Figure 7.1: User Interface Mockup - Energy Management Dashboard</div>
+            </div>
+            
+            <h2>7.2 Hardware Interfaces</h2>
+            <p>For a future real-world deployment, the system would interface with:</p>
+            <ul>
+                <li><strong>Smart Meters:</strong> To get real-time consumption and grid status data.</li>
+                <li><strong>IoT Sensors:</strong> To get temperature and occupancy data.</li>
+                <li><strong>Smart Plugs/Appliances:</strong> To control individual devices.</li>
+            </ul>
+            <p>For the academic project scope, these interfaces are simulated.</p>
+            
+            <h2>7.3 Software Interfaces</h2>
+            <ul>
+                <li><strong>Frontend Technologies:</strong> HTML, CSS, JavaScript, and charting libraries like Chart.js or D3.js.</li>
+                <li><strong>Backend Framework:</strong> Python with Flask or Django.</li>
+                <li><strong>RL Libraries:</strong> Python libraries such as NumPy for numerical computations.</li>
+                <li><strong>Database:</strong> MySQL or PostgreSQL.</li>
+            </ul>
+            
+            <h2>7.4 Communication Interfaces</h2>
+            <p>The system operates in an internet-based environment. Communication between client and server uses HTTP/HTTPS protocols. A stable internet connection is required for users to access the system.</p>
+
+            <!-- Section 8: Security -->
+            <h1>8. SECURITY AND COMPLIANCE CONSIDERATIONS</h1>
+            <ul>
+                <li><strong>User Authentication:</strong> The system implements secure login for users and administrators.</li>
+                <li><strong>Role-Based Access Control:</strong> Administrator has full access; standard users have view-only or limited configuration privileges.</li>
+                <li><strong>Data Security:</strong> All user data and simulation logs are securely stored.</li>
+                <li><strong>Input Validation:</strong> The system validates all user inputs to prevent invalid configurations.</li>
+                <li><strong>Secure Communication:</strong> HTTPS protocol encrypts data transmitted between client and server.</li>
+            </ul>
+
+            <!-- Section 9: Non-Functional Requirements -->
+            <h1>9. NON-FUNCTIONAL REQUIREMENTS</h1>
+            
+            <h2>9.1 Performance Requirements</h2>
+            <ul>
+                <li><strong>System Response Time:</strong> RL agent's decision-making should complete within a few hundred milliseconds.</li>
+                <li><strong>Processing Efficiency:</strong> The training process should run thousands of simulation episodes within a reasonable time frame.</li>
+                <li><strong>Scalability:</strong> Architecture should allow integration of more complex RL algorithms.</li>
+            </ul>
+            
+            <h2>9.2 Usability Requirements</h2>
+            <ul>
+                <li><strong>User-Friendly Interface:</strong> Intuitive for users without technical backgrounds.</li>
+                <li><strong>Clear Visualization:</strong> Energy data presented in easy-to-understand graphical formats.</li>
+                <li><strong>Accessibility:</strong> Responsive design for different screen sizes.</li>
+            </ul>
+            
+            <h2>9.3 Reliability Requirements</h2>
+            <ul>
+                <li><strong>System Availability:</strong> Stable and available for simulation runs.</li>
+                <li><strong>Error Handling:</strong> Graceful handling of invalid inputs with informative error messages.</li>
+                <li><strong>Reproducibility:</strong> Simulation runs should be reproducible with same random seeds.</li>
+            </ul>
+            
+            <h2>9.4 Security Requirements</h2>
+            <ul>
+                <li><strong>Authentication Security:</strong> Secure password hashing and storage.</li>
+                <li><strong>Access Control:</strong> Users can only view and configure their own simulations.</li>
+            </ul>
+            
+            <h2>9.5 Maintainability Requirements</h2>
+            <ul>
+                <li><strong>Modular Design:</strong> Separate RL agent, environment simulation, and UI components.</li>
+                <li><strong>Code Documentation:</strong> Proper documentation of code, especially RL agent implementation.</li>
+            </ul>
+            
+            <h2>9.6 Compatibility Requirements</h2>
+            <ul>
+                <li><strong>Operating System Compatibility:</strong> Windows, Linux, and macOS.</li>
+                <li><strong>Browser Compatibility:</strong> Google Chrome, Microsoft Edge, Mozilla Firefox.</li>
+            </ul>
+
+            <!-- Section 10: System Diagrams -->
+            <h1>10. SYSTEM DIAGRAMS</h1>
+            
+            <div class="diagram-box">
+                <div class="diagram-title">Diagram 10.1: Use Case Diagram</div>
+                <div class="image-placeholder" style="background: #ecf0f1; padding: 20px;">
+                    <img src="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='600' height='350' viewBox='0 0 600 350'%3E%3Crect width='600' height='350' fill='%23ecf0f1'/%3E%3Ccircle cx='100' cy='300' r='40' fill='%233498db'/%3E%3Ctext x='100' y='305' text-anchor='middle' fill='white' font-size='12'%3EHomeowner%3C/text%3E%3Ccircle cx='500' cy='300' r='40' fill='%233498db'/%3E%3Ctext x='500' y='305' text-anchor='middle' fill='white' font-size='12'%3EAdmin%3C/text%3E%3Crect x='200' y='50' width='200' height='200' fill='none' stroke='%232c3e50' stroke-width='2'/%3E%3Ctext x='300' y='30' text-anchor='middle' fill='%232c3e50'%3EAI-Based Energy Management System%3C/text%3E%3Ctext x='250' y='85' fill='%232c3e50'%3EConfigure System%3C/text%3E%3Ctext x='250' y='115' fill='%232c3e50'%3EView Dashboard%3C/text%3E%3Ctext x='250' y='145' fill='%232c3e50'%3EManage RL Agent%3C/text%3E%3Ctext x='250' y='175' fill='%232c3e50'%3ESimulate Environment%3C/text%3E%3Ctext x='250' y='205' fill='%232c3e50'%3EGenerate Reports%3C/text%3E%3C/svg%3E" alt="Use Case Diagram">
+                </div>
+                <div class="image-caption">Diagram 10.1: Use Case Diagram showing interactions between Homeowner, Administrator, and System</div>
+            </div>
+            
+            <div class="diagram-box">
+                <div class="diagram-title">Diagram 10.2: Sequence Diagram</div>
+                <div class="image-placeholder" style="background: #ecf0f1; padding: 20px;">
+                    <img src="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='650' height='350' viewBox='0 0 650 350'%3E%3Crect width='650' height='350' fill='%23ecf0f1'/%3E%3Ctext x='50' y='30' fill='%232c3e50' font-size='12'%3EUser%3C/text%3E%3Ctext x='200' y='30' fill='%232c3e50' font-size='12'%3EUI%3C/text%3E%3Ctext x='350' y='30' fill='%232c3e50' font-size='12'%3EServer%3C/text%3E%3Ctext x='500' y='30' fill='%232c3e50' font-size='12'%3ERL Agent%3C/text%3E%3Ctext x='50' y='80' fill='%232c3e50'%3E1. Start Simulation%3C/text%3E%3Cline x1='70' y1='85' x2='190' y2='85' stroke='black' stroke-dasharray='5,5'/%3E%3Cline x1='200' y1='85' x2='340' y2='85' stroke='black'/%3E%3Ctext x='50' y='130' fill='%232c3e50'%3E2. Get State%3C/text%3E%3Cline x1='70' y1='135' x2='340' y2='135' stroke='black'/%3E%3Cline x1='350' y1='135' x2='490' y2='135' stroke='black'/%3E%3Ctext x='350' y='180' fill='%232c3e50'%3E3. Select Action%3C/text%3E%3Cline x1='370' y1='185' x2='490' y2='185' stroke='black'/%3E%3Ctext x='50' y='230' fill='%232c3e50'%3E4. Return Result%3C/text%3E%3Cline x1='70' y1='235' x2='190' y2='235' stroke='black' stroke-dasharray='5,5'/%3E%3C/svg%3E" alt="Sequence Diagram">
+                </div>
+                <div class="image-caption">Diagram 10.2: Sequence Diagram showing interaction flow for simulation step</div>
+            </div>
+            
+            <div class="diagram-box">
+                <div class="diagram-title">Diagram 10.3: Activity Diagram</div>
+                <div class="image-placeholder" style="background: #ecf0f1; padding: 20px;">
+                    <img src="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='500' height='450' viewBox='0 0 500 450'%3E%3Crect width='500' height='450' fill='%23ecf0f1'/%3E%3Ccircle cx='250' cy='30' r='12' fill='%232c3e50'/%3E%3Ctext x='245' y='35' fill='white' font-size='10'%3E○%3C/text%3E%3Ctext x='220' y='25' fill='%232c3e50' font-size='10'%3EStart%3C/text%3E%3Cline x1='250' y1='42' x2='250' y2='70' stroke='black'/%3E%3Crect x='200' y='70' width='100' height='40' fill='none' stroke='black'/%3E%3Ctext x='210' y='95' fill='%232c3e50' font-size='10'%3EInitialize Environment%3C/text%3E%3Cline x1='250' y1='110' x2='250' y2='140' stroke='black'/%3E%3Crect x='200' y='140' width='100' height='40' fill='none' stroke='black'/%3E%3Ctext x='220' y='165' fill='%232c3e50' font-size='10'%3ERL Agent Selects Action%3C/text%3E%3Cline x1='250' y1='180' x2='250' y2='210' stroke='black'/%3E%3Crect x='200' y='210' width='100' height='40' fill='none' stroke='black'/%3E%3Ctext x='215' y='235' fill='%232c3e50' font-size='10'%3EExecute Action%3C/text%3E%3Cline x1='250' y1='250' x2='250' y2='280' stroke='black'/%3E%3Crect x='200' y='280' width='100' height='40' fill='none' stroke='black'/%3E%3Ctext x='210' y='305' fill='%232c3e50' font-size='10'%3ECalculate Reward%3C/text%3E%3Cline x1='250' y1='320' x2='250' y2='350' stroke='black'/%3E%3Crect x='200' y='350' width='100' height='40' fill='none' stroke='black'/%3E%3Ctext x='210' y='375' fill='%232c3e50' font-size='10'%3EUpdate Q-Table%3C/text%3E%3Cline x1='250' y1='390' x2='250' y2='420' stroke='black'/%3E%3Ccircle cx='250' cy='440' r='12' fill='%232c3e50'/%3E%3Ctext x='245' y='445' fill='white' font-size='10'%3E○%3C/text%3E%3Ctext x='235' y='435' fill='%232c3e50' font-size='10'%3EEnd%3C/text%3E%3C/svg%3E" alt="Activity Diagram">
+                </div>
+                <div class="image-caption">Diagram 10.3: Activity Diagram showing the workflow of the RL learning process</div>
+            </div>
+
+            <!-- Section 11: Conclusion -->
+            <h1>11. CONCLUSION</h1>
+            <p>The AI-Based Household Energy Management System using Reinforcement Learning provides an intelligent and adaptive solution for optimizing home energy usage. By integrating a Q-Learning agent with a dynamic environment simulation, the system can learn optimal strategies for balancing energy consumption and cost. This project demonstrates how AI can be applied to solve real-world problems in the energy sector, leading to smarter, more efficient, and more cost-effective household energy management. The modular architecture allows for future expansion and integration with actual smart home hardware.</p>
+            
+            <div class="image-container">
+                <div class="image-placeholder">
+                    <img src="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='600' height='200' viewBox='0 0 600 200'%3E%3Crect width='600' height='200' fill='%232c3e50'/%3E%3Ctext x='50%25' y='50%25' text-anchor='middle' dy='.3em' fill='white' font-size='14'%3EConclusion: Smarter Homes with AI-Driven Energy Management%3C/text%3E%3C/svg%3E" alt="Conclusion">
+                </div>
+                <div class="image-caption">Figure 11.1: Vision of AI-Driven Smart Home Energy Management</div>
+            </div>
+
+            <!-- Section 12: Future Enhancements -->
+            <h1>12. FUTURE ENHANCEMENTS</h1>
+            <ul>
+                <li><strong>Integration with Real Hardware:</strong> Connecting the system to smart meters, IoT sensors, and smart appliances to manage a real household.</li>
+                <li><strong>Deep Reinforcement Learning:</strong> Implementing more advanced algorithms like Deep Q-Networks (DQN) to handle complex, high-dimensional state spaces.</li>
+                <li><strong>Multi-Objective Optimization:</strong> Expanding the reward function to consider user comfort, carbon footprint, and grid stability.</li>
+                <li><strong>Integration with Renewable Energy Sources:</strong> Developing sophisticated models for solar panel and battery storage management with forecasting.</li>
+                <li><strong>Demand Response Participation:</strong> Enabling the system to participate in utility demand response programs.</li>
+                <li><strong>Multi-Home Aggregation:</strong> Expanding the system to manage a community of homes, optimizing at neighborhood or microgrid level.</li>
+            </ul>
+            
+            <div class="image-container">
+                <div class="image-placeholder">
+                    <img src="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='600' height='200' viewBox='0 0 600 200'%3E%3Crect width='600' height='200' fill='%23f1c40f'/%3E%3Ctext x='50%25' y='50%25' text-anchor='middle' dy='.3em' fill='white' font-size='14'%3EFuture: Smart Grid Integration & Advanced AI%3C/text%3E%3C/svg%3E" alt="Future Scope">
+                </div>
+                <div class="image-caption">Figure 12.1: Future Vision - Smart Grid Integration and Advanced AI Capabilities</div>
+            </div>
+        </div>
+        
+        <footer>
+            <p>© 2026 - AI-Based Household Energy Management System using Reinforcement Learning</p>
+            <p>Institute of Engineering and Technology, Deen Dayal Upadhyaya Gorakhpur University, Gorakhpur</p>
+        </footer>
+    </div>
+</body>
+</html>
